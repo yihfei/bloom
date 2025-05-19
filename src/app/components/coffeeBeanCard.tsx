@@ -45,8 +45,9 @@ import {
           <CardDescription>{origin}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Quantity: {quantity}</p>
+          <p>Quantity: {quantity}g</p>
           <p>Roast Level: {roastLevel}</p>
+          <p>Origin: {origin}</p>
           <p>Variety: {variety}</p>
           <p>Processing Method: {processingMethod}</p>
           <div className="flex flex-wrap gap-2">

@@ -1,11 +1,13 @@
 import { getAllCoffeeBeans } from "@/actions/coffeeBeansController";
-import CoffeeBeanCard from "@/app/components/coffeeBeanCard";
+
+import CoffeeBeanCard from "@/app/components/CoffeeBeanCard";
 
 export default async function CoffeeBeansPage() {
     const coffeeBeans = await getAllCoffeeBeans();
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
             {coffeeBeans.map((coffeeBean) => (
                 <CoffeeBeanCard
                     key={coffeeBean.id}
