@@ -1,9 +1,9 @@
-import { getAllCoffeeBeans } from "@/actions/coffeeBeansController";
+import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
 
 import CoffeeBeanCard from "@/app/components/CoffeeBeanCard";
 
 export default async function CoffeeBeansPage() {
-    const coffeeBeans = await getAllCoffeeBeans();
+    const coffeeBeans = await readAllCoffeeBeans();
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
