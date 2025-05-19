@@ -4,7 +4,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCoffeeBean, updateCoffeeBean } from "@/actions/coffeeBeansController";
-import { Redirect } from "next";
 
 import { Button } from "@/components/ui/button";
 import {

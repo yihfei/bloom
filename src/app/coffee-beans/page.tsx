@@ -2,6 +2,7 @@ import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
 
 import CoffeeBeanCard from "@/app/components/CoffeeBeanCard";
 
+
 export default async function CoffeeBeansPage() {
     const coffeeBeans = await readAllCoffeeBeans();
 

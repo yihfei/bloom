@@ -2,7 +2,7 @@ import CoffeeBeanForm from "@/app/components/CoffeeBeanForm";
 import { readCoffeeBean } from "@/actions/coffeeBeansController";
 
 
-export default async function EditCoffeeBeanPage({ params }: Props) {
+export default async function EditCoffeeBeanPage({ params }) {
     const id = parseInt(params.id);
     console.log("Coffee bean ID:", id);
 
