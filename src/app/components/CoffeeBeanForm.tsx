@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCoffeeBean, updateCoffeeBean } from "@/actions/coffeeBeansController";
+import { CoffeeBean } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +33,10 @@ const coffeeBeanSchema = z.object({
   price: z.number().min(0, "Price must be a positive number"),
 });
 
-export default function CoffeeBeanForm({ action, coffeeBean }: { action: "create" | "edit", coffeeBean?: any }) {
+export default function CoffeeBeanForm({ action, coffeeBean }: { action: "create" | "edit", coffeeBean?: CoffeeBean }) {
+  if (action !== "create" && action !== "edit") {
+    throw new Error("Invalid action"); 
+  }
   const form = useForm<z.infer<typeof coffeeBeanSchema>>({
     resolver: zodResolver(coffeeBeanSchema),
     defaultValues: coffeeBean

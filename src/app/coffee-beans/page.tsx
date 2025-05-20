@@ -1,14 +1,14 @@
 import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
 
 import CoffeeBeanCard from "@/app/components/CoffeeBeanCard";
+import { CoffeeBean } from "@prisma/client";
 
 
 export default async function CoffeeBeansPage() {
-    const coffeeBeans = await readAllCoffeeBeans();
+    const coffeeBeans : CoffeeBean[] = await readAllCoffeeBeans();
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
             {coffeeBeans.map((coffeeBean) => (
                 <CoffeeBeanCard
                     key={coffeeBean.id}

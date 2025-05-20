@@ -3,8 +3,10 @@
 
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import type { CoffeeBean } from "@prisma/client";
 
-export async function createCoffeeBean(formData: FormData) {
+
+export async function createCoffeeBean(formData: FormData) : Promise<void> {
   const name = formData.get("name") as string;
   const quantity = parseInt(formData.get("quantity") as string);
   const roastLevel = formData.get("roastLevel") as string;
@@ -35,19 +37,19 @@ export async function createCoffeeBean(formData: FormData) {
   redirect("/coffee-beans");
 }
 
-export async function readAllCoffeeBeans() {
+export async function readAllCoffeeBeans(): Promise<CoffeeBean[]> {
   return await prisma.coffeeBean.findMany({
     orderBy: { roastDate: "desc" },
   });
 }
 
-export async function readCoffeeBean(id: number) {
+export async function readCoffeeBean(id: number): Promise<CoffeeBean | null> {
   return await prisma.coffeeBean.findUnique({
     where: { id },
   });
 }
 
-export async function updateCoffeeBean(id: number, formData: FormData) {
+export async function updateCoffeeBean(id: number, formData: FormData): Promise<void> {
   const name = formData.get("name") as string;
   const quantity = parseInt(formData.get("quantity") as string);
   const roastLevel = formData.get("roastLevel") as string;
@@ -80,7 +82,7 @@ export async function updateCoffeeBean(id: number, formData: FormData) {
   redirect("/coffee-beans");
 }
 
-export async function deleteCoffeeBean(formData: FormData) {
+export async function deleteCoffeeBean(formData: FormData): Promise<void> {
   const id = parseInt(formData.get("id") as string);
   await prisma.coffeeBean.delete({ where: { id } });
   redirect("/coffee-beans");
