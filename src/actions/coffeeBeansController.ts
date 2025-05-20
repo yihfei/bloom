@@ -18,7 +18,7 @@ export async function createCoffeeBean(formData: FormData) {
   const purchasedFrom = formData.get("purchasedFrom") as string;
   const price = parseFloat(formData.get("price") as string);
 
-  const createdCoffeeBean = await prisma.coffeeBean.create({
+  await prisma.coffeeBean.create({
     data: {
       name,
       quantity,
@@ -61,7 +61,7 @@ export async function updateCoffeeBean(id: number, formData: FormData) {
   const purchasedFrom = formData.get("purchasedFrom") as string;
   const price = parseFloat(formData.get("price") as string);
 
-  const updatedCoffeeBean = await prisma.coffeeBean.update({
+  await prisma.coffeeBean.update({
     where: { id },
     data: {
       name,
@@ -80,6 +80,8 @@ export async function updateCoffeeBean(id: number, formData: FormData) {
   redirect("/coffee-beans");
 }
 
-export async function deleteCoffeeBean(id: number) {
+export async function deleteCoffeeBean(formData: FormData) {
+  const id = parseInt(formData.get("id") as string);
   await prisma.coffeeBean.delete({ where: { id } });
+  redirect("/coffee-beans");
 }
