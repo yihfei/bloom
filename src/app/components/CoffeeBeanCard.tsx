@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -39,8 +40,7 @@ export default function CoffeeBeanCard({
   purchasedFrom,
   price,
 }: CoffeeBeanProps) {
-  console.log("id", id);
-  console.log("id type", typeof id);
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -65,7 +65,10 @@ export default function CoffeeBeanCard({
         <p>Purchased From: {purchasedFrom}</p>
         <p>Price: ${price.toFixed(2)}</p>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex justify-end gap-2">
+        <Button>
+          <Link href={`/coffee-beans/edit/${id}`}>Edit</Link>
+        </Button>
         <form action={deleteCoffeeBean}>
           <input type="hidden" name="id" value={id} />
           <Button type="submit" variant="destructive">
