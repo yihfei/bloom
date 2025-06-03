@@ -11,7 +11,7 @@ datasource db {
 model CoffeeBean {
     id               Int      @id @default(autoincrement())
     name             String
-    quantity         Float 
+    quantity         Float
     roastLevel       String
     origin           String
     variety          String
@@ -19,5 +19,29 @@ model CoffeeBean {
     flavourNotes     String[] // or String[] if you want array later
     roastDate        DateTime
     purchasedFrom    String
-    price            Float 
+    price            Float
+    brews            Brew[]
+}
+
+model Grinder {
+    id    Int    @id @default(autoincrement())
+    name  String
+    price Float
+    brews Brew[]
+}
+
+model Brew {
+    id           Int        @id @default(autoincrement())
+    coffeeBean   CoffeeBean @relation(fields: [coffeeBeanId], references: [id])
+    coffeeBeanId Int
+    coffeeAmount Float
+    waterAmount  Float
+    grinder      Grinder?   @relation(fields: [grinderId], references: [id])
+    grinderId    Int?
+    grindSetting String
+    brewMethod   String
+    brewTime     Int
+    notes        String?
+    createdAt    DateTime   @default(now())
+    updatedAt    DateTime   @updatedAt
 }

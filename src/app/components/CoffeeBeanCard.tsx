@@ -40,7 +40,6 @@ export default function CoffeeBeanCard({
   purchasedFrom,
   price,
 }: CoffeeBeanProps) {
-
   return (
     <Card className="w-full">
       <CardHeader>
@@ -74,7 +73,6 @@ export default function CoffeeBeanCard({
           <Button type="submit" variant="destructive">
             Delete
           </Button>
-      
         </form>
       </CardFooter>
     </Card>
