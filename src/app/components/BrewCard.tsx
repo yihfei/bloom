@@ -1,3 +1,5 @@
+
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -6,6 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { deleteBrew } from "@/actions/brewsController";
+import { Button } from "@/components/ui/button";
 
 type BrewCardProps = {
   id: number;
@@ -51,7 +55,16 @@ export default function BrewCard({
         <p>Brew Time: {brewTime} seconds</p>
         <p>Notes: {notes}</p>
       </CardContent>
-      <CardFooter>{/* Additional footer content can go here */}</CardFooter>
-    </Card>
+      <CardFooter className="flex justify-end gap-2">
+        <Button>
+          <Link href={`/brews/edit/${id}`}>Edit</Link>
+        </Button>
+        <form action={deleteBrew}>
+          <input type="hidden" name="id" value={id} />
+          <Button type="submit" variant="destructive">
+            Delete
+          </Button>
+        </form>
+      </CardFooter>    </Card>
   );
 }

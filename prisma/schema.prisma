@@ -32,16 +32,16 @@ model Grinder {
 
 model Brew {
     id           Int        @id @default(autoincrement())
-    coffeeBean   CoffeeBean @relation(fields: [coffeeBeanId], references: [id])
-    coffeeBeanId Int
+    coffeeBean   CoffeeBean? @relation(fields: [coffeeBeanId], references: [id], onDelete: SetNull)
+    coffeeBeanId Int?
     coffeeAmount Float
     waterAmount  Float
-    grinder      Grinder?   @relation(fields: [grinderId], references: [id])
-    grinderId    Int?
+    grinderId    Int? // Make nullable
+    grinder      Grinder?   @relation(fields: [grinderId], references: [id], onDelete: SetNull)
     grindSetting String
     brewMethod   String
     brewTime     Int
-    notes        String?
+    notes        String
     createdAt    DateTime   @default(now())
     updatedAt    DateTime   @updatedAt
 }
