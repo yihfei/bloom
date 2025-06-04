@@ -1,5 +1,5 @@
 import { readAllBrews } from "@/actions/brewsController";
-import BrewCard from "@/app/components/BrewCard";
+import BrewCard from "@/app/components/brews/BrewCard";
 import { Brew } from "@prisma/client";
 
 export default async function BrewsPage() {

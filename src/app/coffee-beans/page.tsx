@@ -1,5 +1,5 @@
 import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
-import CoffeeBeanCard from "@/app/components/CoffeeBeanCard";
+import CoffeeBeanCard from "@/app/components/coffee-beans/CoffeeBeanCard";
 import { CoffeeBean } from "@prisma/client";
 
 

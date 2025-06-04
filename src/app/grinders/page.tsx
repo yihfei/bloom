@@ -1,5 +1,5 @@
 import { readAllGrinders } from "@/actions/grindersController"
-import GrinderCard from "@/app/components/GrinderCard"
+import GrinderCard from "@/app/components/grinders/GrinderCard"
 import { Grinder } from "@prisma/client"
 
 export default async function GrindersPage() {

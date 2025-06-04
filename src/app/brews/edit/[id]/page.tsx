@@ -1,4 +1,4 @@
-import BrewForm from "@/app/components/BrewForm";
+import BrewForm from "@/app/components/brews/BrewForm";
 import { readBrew } from "@/actions/brewsController";
 import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
 import { readAllGrinders } from "@/actions/grindersController";
@@ -28,7 +28,12 @@ export default async function EditBrewPage({
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <BrewForm action="edit" brew={brew} grinders={grinders} coffeeBeans={coffeeBeans} />
+      <BrewForm
+        action="edit"
+        brew={brew}
+        grinders={grinders}
+        coffeeBeans={coffeeBeans}
+      />
     </div>
   );
 }

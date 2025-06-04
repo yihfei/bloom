@@ -1,4 +1,4 @@
-import CoffeeBeanForm from "@/app/components/CoffeeBeanForm";
+import CoffeeBeanForm from "@/app/components/coffee-beans/CoffeeBeanForm";
 import { readCoffeeBean } from "@/actions/coffeeBeansController";
 import { CoffeeBean } from "@prisma/client";
 
