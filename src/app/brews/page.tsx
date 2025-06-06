@@ -1,9 +1,14 @@
 import { readAllBrews } from "@/actions/brewsController";
 import BrewCard from "@/app/components/brews/BrewCard";
-import { Brew } from "@prisma/client";
+import { Brew, Grinder, CoffeeBean } from "@prisma/client";
+
+type BrewsWithRelations = Brew & {
+  coffeeBean: CoffeeBean | null;
+  grinder: Grinder | null;
+};
 
 export default async function BrewsPage() {
-  const brews: Brew[] = await readAllBrews();
+  const brews: BrewsWithRelations[] = await readAllBrews();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

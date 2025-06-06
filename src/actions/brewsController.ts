@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import type { Brew } from "@prisma/client";
+import type { Brew, Grinder, CoffeeBean } from "@prisma/client";
 
 export async function createBrew(formData: FormData): Promise<void> {
   const coffeeBeanId = formData.get("coffeeBeanId") as string;
@@ -29,7 +29,12 @@ export async function createBrew(formData: FormData): Promise<void> {
   redirect("/brews");
 }
 
-export async function readAllBrews(): Promise<Brew[]> {
+type BrewWithRelations = Brew & {
+  grinder: Grinder | null;
+  coffeeBean: CoffeeBean | null;
+};
+
+export async function readAllBrews(): Promise<BrewWithRelations[]> {
   const beans = await prisma.brew.findMany({
     include: {
       grinder: true,
@@ -38,6 +43,7 @@ export async function readAllBrews(): Promise<Brew[]> {
   });
   return beans;
 }
+
 
 export async function readBrew(id: number): Promise<Brew | null> {
   return await prisma.brew.findUnique({
