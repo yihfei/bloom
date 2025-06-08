@@ -33,11 +33,13 @@ export default function BrewForm({
   brew,
   coffeeBeans,
   grinders,
+  userId
 }: {
   action: "create" | "edit";
   brew?: Brew;
   coffeeBeans?: CoffeeBean[];
   grinders?: Grinder[];
+  userId: string;
 }) {
   if (action !== "create" && action !== "edit") {
     throw new Error("Invalid action");
@@ -49,7 +51,6 @@ export default function BrewForm({
           ...brew,
           coffeeBeanId: brew.coffeeBeanId ?? 0,
           grinderId: brew.grinderId ?? 0,
-          // convert dates to ISO strings required for HTML date input
         }
       : {
           coffeeBeanId: 0,
@@ -70,9 +71,9 @@ export default function BrewForm({
     });
 
     if (action === "create") {
-      await createBrew(formData);
+      await createBrew(formData, userId);
     } else if (action === "edit" && brew) {
-      await updateBrew(brew.id, formData);
+      await updateBrew(brew.id, formData, userId);
     }
 
     form.reset();

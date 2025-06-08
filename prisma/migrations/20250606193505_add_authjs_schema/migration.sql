@@ -52,6 +52,22 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 
+
+-- Add the `userId` column with a default value
+ALTER TABLE "Brew" ADD COLUMN "userId" TEXT NOT NULL DEFAULT 'default-user-id';
+ALTER TABLE "CoffeeBean" ADD COLUMN "userId" TEXT NOT NULL DEFAULT 'default-user-id';
+ALTER TABLE "Grinder" ADD COLUMN "userId" TEXT NOT NULL DEFAULT 'default-user-id';
+
+-- Optionally, update existing rows with a valid `userId`
+UPDATE "Brew" SET "userId" = 'default-user-id' WHERE "userId" IS NULL;
+UPDATE "CoffeeBean" SET "userId" = 'default-user-id' WHERE "userId" IS NULL;
+UPDATE "Grinder" SET "userId" = 'default-user-id' WHERE "userId" IS NULL;
+
+-- Remove the default value after updating rows (optional)
+ALTER TABLE "Brew" ALTER COLUMN "userId" DROP DEFAULT;
+ALTER TABLE "CoffeeBean" ALTER COLUMN "userId" DROP DEFAULT;
+ALTER TABLE "Grinder" ALTER COLUMN "userId" DROP DEFAULT;
+
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 

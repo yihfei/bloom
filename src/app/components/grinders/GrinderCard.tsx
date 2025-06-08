@@ -15,9 +15,10 @@ type GrinderProps = {
   id: number;
   name: string;
   price: number;
+  userId: string;
 };
 
-export default function GrinderCard({ id, name, price }: GrinderProps) {
+export default function GrinderCard({ id, name, price, userId }: GrinderProps) {
   return (
     <Card className="w-full">
       <CardHeader>
@@ -33,6 +34,7 @@ export default function GrinderCard({ id, name, price }: GrinderProps) {
         </Button>
         <form action={deleteGrinder}>
           <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="userId" value={userId} />
           <Button type="submit" variant="destructive">
             Delete
           </Button>

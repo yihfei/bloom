@@ -25,6 +25,7 @@ type CoffeeBeanProps = {
   roastDate: Date;
   purchasedFrom: string;
   price: number;
+  userId: string;
 };
 
 export default function CoffeeBeanCard({
@@ -39,6 +40,7 @@ export default function CoffeeBeanCard({
   roastDate,
   purchasedFrom,
   price,
+  userId
 }: CoffeeBeanProps) {
   return (
     <Card className="w-full">
@@ -70,6 +72,7 @@ export default function CoffeeBeanCard({
         </Button>
         <form action={deleteCoffeeBean}>
           <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="userId" value={userId} />
           <Button type="submit" variant="destructive">
             Delete
           </Button>

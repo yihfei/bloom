@@ -27,31 +27,25 @@ export default function Navbar() {
             <Link href="/grinders">grinders</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        { pathname === "/brews" && (
+        {pathname === "/brews" && (
           <NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/brews/create">add brew</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <Link href="/brews/create">add brew</Link>
+            </NavigationMenuLink>
           </NavigationMenuItem>
         )}
-        { pathname === "/grinders" && (
+        {pathname === "/grinders" && (
           <NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/grinders/create">add grinder</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <Link href="/grinders/create">add grinder</Link>
+            </NavigationMenuLink>
           </NavigationMenuItem>
         )}
-        { pathname === "/coffee-beans" && (
+        {pathname === "/coffee-beans" && (
           <NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/coffee-beans/create">add coffee beans</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <Link href="/coffee-beans/create">add coffee beans</Link>
+            </NavigationMenuLink>
           </NavigationMenuItem>
         )}
       </NavigationMenuList>

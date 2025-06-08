@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import type { Brew, Grinder, CoffeeBean } from "@prisma/client";
 
-export async function createBrew(formData: FormData): Promise<void> {
+export async function createBrew(formData: FormData, userId: string): Promise<void> {
   const coffeeBeanId = formData.get("coffeeBeanId") as string;
   const coffeeAmount = formData.get("coffeeAmount") as string;
   const waterAmount = formData.get("waterAmount") as string;
@@ -24,6 +24,7 @@ export async function createBrew(formData: FormData): Promise<void> {
       brewMethod,
       brewTime: parseInt(brewTime),
       notes,
+      userId
     },
   });
   redirect("/brews");
@@ -34,8 +35,9 @@ type BrewWithRelations = Brew & {
   coffeeBean: CoffeeBean | null;
 };
 
-export async function readAllBrews(): Promise<BrewWithRelations[]> {
+export async function readAllBrews(userId: string): Promise<BrewWithRelations[]> {
   const beans = await prisma.brew.findMany({
+    where: { userId },
     include: {
       grinder: true,
       coffeeBean: true,
@@ -45,15 +47,15 @@ export async function readAllBrews(): Promise<BrewWithRelations[]> {
 }
 
 
-export async function readBrew(id: number): Promise<Brew | null> {
+export async function readBrew(id: number, userId: string): Promise<Brew | null> {
   return await prisma.brew.findUnique({
-    where: { id },
+    where: { id, userId },
   });
 }
 
 export async function updateBrew(
   id: number,
-  formData: FormData
+  formData: FormData, userId: string
 ): Promise<void> {
   const coffeeBeanId = formData.get("coffeeBeanId") as string;
   const coffeeAmount = formData.get("coffeeAmount") as string;
@@ -65,7 +67,7 @@ export async function updateBrew(
   const notes = formData.get("notes") as string;
 
   await prisma.brew.update({
-    where: { id },
+    where: { id, userId },
     data: {
       coffeeBeanId: parseInt(coffeeBeanId),
       coffeeAmount: parseFloat(coffeeAmount),
@@ -82,6 +84,8 @@ export async function updateBrew(
 
 export async function deleteBrew(formData: FormData): Promise<void> {
   const id = parseInt(formData.get("id") as string);
-  await prisma.brew.delete({ where: { id } });
+  const userId = formData.get("userId") as string;
+
+  await prisma.brew.delete({ where: { id, userId } });
   redirect("/brews");
 }

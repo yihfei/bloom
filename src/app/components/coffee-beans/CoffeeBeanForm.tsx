@@ -3,7 +3,10 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createCoffeeBean, updateCoffeeBean } from "@/actions/coffeeBeansController";
+import {
+  createCoffeeBean,
+  updateCoffeeBean,
+} from "@/actions/coffeeBeansController";
 import { CoffeeBean } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
@@ -16,7 +19,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
 
 const coffeeBeanSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -33,17 +35,25 @@ const coffeeBeanSchema = z.object({
   price: z.number().min(0, "Price must be a positive number"),
 });
 
-export default function CoffeeBeanForm({ action, coffeeBean }: { action: "create" | "edit", coffeeBean?: CoffeeBean }) {
+export default function CoffeeBeanForm(
+  {
+    action,
+    coffeeBean,
+    userId
+  }: { action: "create" | "edit"; coffeeBean?: CoffeeBean; userId: string } = { action: "create", coffeeBean: undefined, userId: "" }
+  
+) {
   if (action !== "create" && action !== "edit") {
-    throw new Error("Invalid action"); 
+    throw new Error("Invalid action");
   }
+
   const form = useForm<z.infer<typeof coffeeBeanSchema>>({
     resolver: zodResolver(coffeeBeanSchema),
     defaultValues: coffeeBean
       ? {
-            ...coffeeBean,
-            roastDate: new Date(coffeeBean.roastDate).toISOString().split("T")[0],
-            flavourNotes: coffeeBean.flavourNotes.join(", "),
+          ...coffeeBean,
+          roastDate: new Date(coffeeBean.roastDate).toISOString().split("T")[0],
+          flavourNotes: coffeeBean.flavourNotes.join(", "),
         }
       : {
           name: "",
@@ -66,9 +76,9 @@ export default function CoffeeBeanForm({ action, coffeeBean }: { action: "create
     });
 
     if (action === "create") {
-      await createCoffeeBean(formData);
+      await createCoffeeBean(formData, userId);
     } else if (action === "edit" && coffeeBean) {
-      await updateCoffeeBean(coffeeBean.id, formData);
+      await updateCoffeeBean(coffeeBean.id, formData, userId);
     }
 
     form.reset();
@@ -76,18 +86,71 @@ export default function CoffeeBeanForm({ action, coffeeBean }: { action: "create
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md mx-auto space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="max-w-md mx-auto space-y-8"
+      >
         {[
-          { name: "name", label: "Name", type: "text", placeholder: "Coffee Bean Name" },
-          { name: "quantity", label: "Quantity", type: "number", placeholder: "Quantity in grams" },
-          { name: "roastLevel", label: "Roast Level", type: "text", placeholder: "Roast Level" },
-          { name: "origin", label: "Origin", type: "text", placeholder: "Origin" },
-          { name: "variety", label: "Variety", type: "text", placeholder: "Variety" },
-          { name: "processingMethod", label: "Processing Method", type: "text", placeholder: "Processing Method" },
-          { name: "flavourNotes", label: "Flavour Notes", type: "text", placeholder: "Flavour Notes (comma separated)" },
-          { name: "roastDate", label: "Roast Date", type: "date", placeholder: "" },
-          { name: "purchasedFrom", label: "Purchased From", type: "text", placeholder: "Purchased From" },
-          { name: "price", label: "Price", type: "number", placeholder: "Price" },
+          {
+            name: "name",
+            label: "Name",
+            type: "text",
+            placeholder: "Coffee Bean Name",
+          },
+          {
+            name: "quantity",
+            label: "Quantity",
+            type: "number",
+            placeholder: "Quantity in grams",
+          },
+          {
+            name: "roastLevel",
+            label: "Roast Level",
+            type: "text",
+            placeholder: "Roast Level",
+          },
+          {
+            name: "origin",
+            label: "Origin",
+            type: "text",
+            placeholder: "Origin",
+          },
+          {
+            name: "variety",
+            label: "Variety",
+            type: "text",
+            placeholder: "Variety",
+          },
+          {
+            name: "processingMethod",
+            label: "Processing Method",
+            type: "text",
+            placeholder: "Processing Method",
+          },
+          {
+            name: "flavourNotes",
+            label: "Flavour Notes",
+            type: "text",
+            placeholder: "Flavour Notes (comma separated)",
+          },
+          {
+            name: "roastDate",
+            label: "Roast Date",
+            type: "date",
+            placeholder: "",
+          },
+          {
+            name: "purchasedFrom",
+            label: "Purchased From",
+            type: "text",
+            placeholder: "Purchased From",
+          },
+          {
+            name: "price",
+            label: "Price",
+            type: "number",
+            placeholder: "Price",
+          },
         ].map(({ name, label, type, placeholder }) => (
           <FormField
             key={name}

@@ -3,12 +3,19 @@ import { readBrew } from "@/actions/brewsController";
 import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
 import { readAllGrinders } from "@/actions/grindersController";
 import { Brew, CoffeeBean, Grinder } from "@prisma/client";
+import { auth } from "@/auth";
 
 export default async function EditBrewPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await auth();
+  const userId = session?.user?.id;
+  if (!userId) {
+    return <div>You are not signed in.</div>;
+  }
+
   const { id } = await params;
   const idNum = parseInt(id);
 
@@ -17,14 +24,14 @@ export default async function EditBrewPage({
     return <div>Error: Brew is missing.</div>;
   }
 
-  const brew: Brew | null = await readBrew(idNum);
+  const brew: Brew | null = await readBrew(idNum, userId);
 
   if (!brew) {
     return <div>Error: Brew not found.</div>;
   }
 
-  const grinders: Grinder[] = await readAllGrinders();
-  const coffeeBeans: CoffeeBean[] = await readAllCoffeeBeans();
+  const grinders: Grinder[] = await readAllGrinders(userId);
+  const coffeeBeans: CoffeeBean[] = await readAllCoffeeBeans(userId);
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -33,6 +40,7 @@ export default async function EditBrewPage({
         brew={brew}
         grinders={grinders}
         coffeeBeans={coffeeBeans}
+        userId={userId}
       />
     </div>
   );

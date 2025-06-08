@@ -25,9 +25,11 @@ const grinderSchema = z.object({
 export default function GrinderForm({
   action,
   grinder,
+  userId,
 }: {
   action: "create" | "edit";
   grinder?: Grinder;
+  userId: string;
 }) {
   if (action !== "create" && action !== "edit") {
     throw new Error("Invalid action");
@@ -50,9 +52,9 @@ export default function GrinderForm({
       formData.append(key, value.toString());
     });
     if (action === "create") {
-      await createGrinder(formData);
+      await createGrinder(formData, userId);
     } else {
-      await updateGrinder(grinder!.id, formData);
+      await updateGrinder(grinder!.id, formData, userId);
     }
     form.reset();
   }
@@ -89,8 +91,10 @@ export default function GrinderForm({
                     {...field}
                     onChange={(e) =>
                       type === "number"
-                        ? field.onChange(parseFloat(e.target.value))
-                        : field.onChange(e.target.value)
+                        ? field.onChange(
+                          e.target.value === "" ? undefined : parseFloat(e.target.value) // Handle empty input
+                        )
+                      : field.onChange(e.target.value)
                     }
                   />
                 </FormControl>

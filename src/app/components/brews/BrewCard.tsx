@@ -23,6 +23,7 @@ type BrewCardProps = {
   notes: string | null;
   createdAt: Date;
   updatedAt?: Date;
+  userId: string;
 };
 
 export default function BrewCard({
@@ -36,6 +37,7 @@ export default function BrewCard({
   brewTime,
   notes,
   createdAt,
+  userId,
 }: BrewCardProps) {
   return (
     <Card className="w-full">
@@ -61,6 +63,7 @@ export default function BrewCard({
         </Button>
         <form action={deleteBrew}>
           <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="userId" value={userId} />
           <Button type="submit" variant="destructive">
             Delete
           </Button>
