@@ -13,8 +13,24 @@ import SignOutButton from "./SignOutButton";
 
 export default function Navbar({ action }: { action: "logout" | "login" }) {
   const pathname = usePathname();
+
+  if (action === "login") {
+    return (
+      <div className="flex p-1 justify-end items-center">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <SignInButton />
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+    );
+  }
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex p-1 justify-between items-center">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -53,28 +69,20 @@ export default function Navbar({ action }: { action: "logout" | "login" }) {
           )}
         </NavigationMenuList>
       </NavigationMenu>
+
       <NavigationMenu>
         <NavigationMenuList>
-          {action === "logout" && (
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/">Home</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          )}
-          {action === "logout" ? (
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <SignOutButton />
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          ) : (
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <SignInButton />
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          )}
+          <NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <Link href="/">Home</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <SignOutButton />
+            </NavigationMenuLink>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
     </div>
