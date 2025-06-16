@@ -11,7 +11,6 @@ export default async function middleware(request: NextRequest) {
   // Get the session token from cookies
   // dont use auth() here as it requires a server context (prisma client, etc.)
   const sessionToken = request.cookies.get("authjs.session-token");
-  console.log("Session Token:", sessionToken);
 
   if (isProtected && !sessionToken) {
     return NextResponse.redirect(new URL("/api/auth/signin", request.url));

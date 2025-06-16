@@ -103,3 +103,7 @@ export async function deleteCoffeeBean(
   await prisma.coffeeBean.delete({ where: { id, userId } });
   redirect("/coffee-beans");
 }
+
+export async function getCoffeeBeanCount(userId: string): Promise<number> {
+  return await prisma.coffeeBean.count({ where: { userId } });
+}

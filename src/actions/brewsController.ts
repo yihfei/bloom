@@ -4,7 +4,10 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import type { Brew, Grinder, CoffeeBean } from "@prisma/client";
 
-export async function createBrew(formData: FormData, userId: string): Promise<void> {
+export async function createBrew(
+  formData: FormData,
+  userId: string
+): Promise<void> {
   const coffeeBeanId = formData.get("coffeeBeanId") as string;
   const coffeeAmount = formData.get("coffeeAmount") as string;
   const waterAmount = formData.get("waterAmount") as string;
@@ -24,7 +27,7 @@ export async function createBrew(formData: FormData, userId: string): Promise<vo
       brewMethod,
       brewTime: parseInt(brewTime),
       notes,
-      userId
+      userId,
     },
   });
   redirect("/brews");
@@ -35,19 +38,23 @@ type BrewWithRelations = Brew & {
   coffeeBean: CoffeeBean | null;
 };
 
-export async function readAllBrews(userId: string): Promise<BrewWithRelations[]> {
-  const beans = await prisma.brew.findMany({
+export async function readAllBrews(
+  userId: string
+): Promise<BrewWithRelations[]> {
+  const brews = await prisma.brew.findMany({
     where: { userId },
     include: {
       grinder: true,
       coffeeBean: true,
     },
   });
-  return beans;
+  return brews;
 }
 
-
-export async function readBrew(id: number, userId: string): Promise<Brew | null> {
+export async function readBrew(
+  id: number,
+  userId: string
+): Promise<Brew | null> {
   return await prisma.brew.findUnique({
     where: { id, userId },
   });
@@ -55,7 +62,8 @@ export async function readBrew(id: number, userId: string): Promise<Brew | null>
 
 export async function updateBrew(
   id: number,
-  formData: FormData, userId: string
+  formData: FormData,
+  userId: string
 ): Promise<void> {
   const coffeeBeanId = formData.get("coffeeBeanId") as string;
   const coffeeAmount = formData.get("coffeeAmount") as string;
@@ -88,4 +96,116 @@ export async function deleteBrew(formData: FormData): Promise<void> {
 
   await prisma.brew.delete({ where: { id, userId } });
   redirect("/brews");
+}
+
+export async function getNumberOfBrews(userId: string): Promise<number> {
+  const brews = await readAllBrews(userId);
+  const numberOfBrews = brews.length;
+  return Math.round(numberOfBrews);
+}
+
+export async function getAverageBrewPrice(userId: string): Promise<number> {
+  const brews = await readAllBrews(userId);
+
+  // Map to track the number of brews for each coffee bean and grinder
+  const coffeeBeanUsage: Record<string, number> = {};
+  const grinderUsage: Record<string, number> = {};
+
+  brews.forEach((brew) => {
+    if (brew.coffeeBean?.id) {
+      coffeeBeanUsage[brew.coffeeBean.id] =
+        (coffeeBeanUsage[brew.coffeeBean.id] || 0) + 1;
+    }
+    if (brew.grinder?.id) {
+      grinderUsage[brew.grinder.id] = (grinderUsage[brew.grinder.id] || 0) + 1;
+    }
+  });
+
+  console.log("Coffee Bean Usage:", coffeeBeanUsage);
+  console.log("Grinder Usage:", grinderUsage);
+
+  // Calculate the total cost for coffee beans
+  const coffeeBeanCost = Object.entries(coffeeBeanUsage).reduce(
+    (total, [beanId, usage]) => {
+      const coffeeBean = brews.find(
+        (brew) => brew.coffeeBean?.id === parseInt(beanId)
+      )?.coffeeBean;
+      if (coffeeBean) {
+        const avgCost = coffeeBean.price / usage; // Divide cost by usage
+        console.log(
+          `Coffee Bean ID: ${beanId}, Usage: ${usage}, Avg Cost: ${avgCost}`)
+        total += avgCost; // Divide cost by usage
+      } 
+      return total;
+    },
+    0
+  );
+
+  // Calculate the total cost for grinders
+  const grinderCost = Object.entries(grinderUsage).reduce(
+    (total, [grinderId, usage]) => {
+      const grinder = brews.find(
+        (brew) => brew.grinder?.id === parseInt(grinderId)
+      )?.grinder;
+      if (grinder) {
+        const avgCost = grinder.price / usage; // Divide cost by usage
+        console.log(
+          `Grinder ID: ${grinderId}, Usage: ${usage}, Avg Cost: ${avgCost}`
+        );
+        total += avgCost; // Divide cost by usage
+      }
+      return total;
+    },
+    0
+  );
+
+  // Sum up the costs
+  const totalPrice = coffeeBeanCost + grinderCost;
+
+
+  console.log("Total Brew Price:", totalPrice);
+  return parseFloat((totalPrice / brews.length).toFixed(2));// Round to two decimal places
+}
+
+export async function getTotalTimeSpentBrewing(
+  userId: string
+): Promise<number> {
+  const brews = await readAllBrews(userId);
+  const totalTime = brews.reduce((sum, brew) => sum + (brew.brewTime || 0), 0);
+  return totalTime;
+}
+
+export async function getAllBrewDates(
+  userId: string
+): Promise<{ date: Date; placeholder: number }[]> {
+  const brews = await readAllBrews(userId);
+  const dates = brews.map((brew) => ({
+    date: new Date(brew.createdAt),
+    placeholder: 1,
+  }));
+  return dates;
+}
+
+// This function retrieves the number of brews made by a user on each day.
+export async function getNumberOfBrewsByDay(
+  userId: string
+): Promise<{ date: string; brewCount: number }[]> {
+  const brews = await readAllBrews(userId);
+  const dates = brews
+    .map((brew) => ({
+      date: new Date(brew.createdAt).toISOString().split("T")[0], // Format date to YYYY-MM-DD
+      count: 1, // Each brew counts as one
+    }))
+    .reduce((acc, brew) => {
+      const brewDate = brew.date;
+      if (!acc[brewDate]) {
+        acc[brewDate] = { date: brewDate, count: 0 };
+      }
+      acc[brewDate].count += brew.count;
+      return acc;
+    }, {} as Record<string, { date: string; count: number }>);
+  return Object.values(dates).map(({ date, count }) => ({
+    date,
+    brewCount: count,
+  }));
 }
