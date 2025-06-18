@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import type { Brew, Grinder, CoffeeBean } from "@prisma/client";
+import type { Brew, Grinder, CoffeeBean, BrewMethod } from "@prisma/client";
 
 export async function createBrew(
   formData: FormData,
@@ -36,6 +36,7 @@ export async function createBrew(
 type BrewWithRelations = Brew & {
   grinder: Grinder | null;
   coffeeBean: CoffeeBean | null;
+  brewMethod: BrewMethod | null;
 };
 
 export async function readAllBrews(

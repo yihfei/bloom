@@ -10,9 +10,6 @@ export default async function GrindersPage() {
         return <div>you&apos;re not signed in</div>;
     }
     const grinders: Grinder[] = await readAllGrinders(userId);
-    // print user id and type
-    console.log("User ID:", userId);
-    console.log("User ID Type:", typeof userId);
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -23,6 +20,7 @@ export default async function GrindersPage() {
                     name={grinder.name}
                     price={grinder.price}
                     userId={userId}
+                    description={grinder.description || "no description provided"}
                 />
             ))}
            

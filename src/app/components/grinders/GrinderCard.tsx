@@ -16,9 +16,16 @@ type GrinderProps = {
   name: string;
   price: number;
   userId: string;
+  description?: string | null;
 };
 
-export default function GrinderCard({ id, name, price, userId }: GrinderProps) {
+export default function GrinderCard({
+  id,
+  name,
+  price,
+  userId,
+  description,
+}: GrinderProps) {
   return (
     <Card className="w-full">
       <CardHeader>
@@ -26,7 +33,7 @@ export default function GrinderCard({ id, name, price, userId }: GrinderProps) {
         <CardDescription>Price: ${price}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>card content</p>
+        <p>{description}</p>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Button>

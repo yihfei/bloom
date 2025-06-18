@@ -10,12 +10,14 @@ export async function createBrewMethod(
 ): Promise<void> {
   const name = formData.get("name") as string;
   const price = parseFloat(formData.get("price") as string);
+  const description = formData.get("description") as string;
 
   await prisma.brewMethod.create({
     data: {
       name,
       price,
       userId,
+      description
     },
   });
   redirect("/brew-methods");
@@ -44,12 +46,14 @@ export async function updateBrewMethod(
 ): Promise<void> {
   const name = formData.get("name") as string;
   const price = parseFloat(formData.get("price") as string);
+  const description = formData.get("description") as string;
 
   await prisma.brewMethod.update({
     where: { id, userId },
     data: {
       name,
       price,
+      description
     },
   });
   redirect("/brew-methods");

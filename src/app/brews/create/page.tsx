@@ -2,7 +2,7 @@ import BrewForm from "@/app/components/brews/BrewForm";
 import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
 import { readAllGrinders } from "@/actions/grindersController";
 import { readAllBrewMethods } from "@/actions/brewMethodsController";
-import { CoffeeBean, Grinder } from "@prisma/client";
+import { CoffeeBean, Grinder, BrewMethod } from "@prisma/client";
 import { auth } from "@/auth";
 
 export default async function CreatebrewPage() {

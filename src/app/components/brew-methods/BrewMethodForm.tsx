@@ -27,6 +27,7 @@ const brewMethodSchema = z.object({
       invalid_type_error: "Price must be a number", // Custom error for invalid type
     })
     .min(0, "Price must be a positive number"),
+  description: z.string().optional(),
 });
 
 export default function BrewMethodForm({
@@ -47,10 +48,12 @@ export default function BrewMethodForm({
     defaultValues: brewMethod
       ? {
           ...brewMethod,
+          description: brewMethod.description || "",
         }
       : {
           name: "",
           price: 0,
+          description: "",
         },
   });
 
@@ -83,6 +86,12 @@ export default function BrewMethodForm({
             label: "Price",
             type: "number",
             placeholder: "Enter brew method price",
+          },
+          {
+            name: "description",
+            label: "Description",
+            type: "text",
+            placeholder: "Enter brew method description (optional)",
           },
         ].map(({ name, label, type, placeholder }) => (
           <FormField

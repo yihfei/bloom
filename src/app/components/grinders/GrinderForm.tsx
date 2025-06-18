@@ -19,7 +19,12 @@ import { Input } from "@/components/ui/input";
 
 const grinderSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  price: z.number().min(0, "Price must be a positive number"),
+  price: z
+    .number({
+      invalid_type_error: "Price must be a number", // Custom error for invalid type
+    })
+    .min(0, "Price must be a positive number"),
+  description: z.string().optional(),
 });
 
 export default function GrinderForm({
@@ -39,10 +44,12 @@ export default function GrinderForm({
     defaultValues: grinder
       ? {
           ...grinder,
+          description: grinder.description || "", // Ensure description is a string
         }
       : {
           name: "",
           price: 0,
+          description: "",
         },
   });
 
@@ -74,6 +81,12 @@ export default function GrinderForm({
             label: "Price",
             type: "number",
             placeholder: "Enter grinder price",
+          },
+          {
+            name: "description",
+            label: "Description",
+            type: "text",
+            placeholder: "Enter brew method description (optional)",
           },
         ].map(({ name, label, type, placeholder }) => (
           <FormField

@@ -1,13 +1,11 @@
 import { auth } from "@/auth";
-// import SignInButton from "@/app/components/SignInButton";
-// import SignOutButton from "@/app/components/SignOutButton";
-// import Image from "next/image";
-import Dashboard from "@/app/dashboard/Dashboard";
+
+import Dashboard from "@/app/dashboard/dashboard";
 
 export default async function Home() {
   const session = await auth();
 
-  if (!session) {
+  if (!session || !session.user|| !session.user.id) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <p>Please sign in to access your dashboard.</p>

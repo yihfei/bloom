@@ -20,6 +20,7 @@ export default async function BrewMethodsPage() {
                     id={brewMethod.id}
                     name={brewMethod.name}
                     price={brewMethod.price}
+                    description={brewMethod.description || "no description provided"}
                     userId={userId}
                 />
             ))}

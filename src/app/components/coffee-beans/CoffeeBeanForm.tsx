@@ -22,7 +22,11 @@ import { Input } from "@/components/ui/input";
 
 const coffeeBeanSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  quantity: z.number().min(1, "Quantity is required"),
+  quantity: z
+    .number({
+      invalid_type_error: "quantity must be a number", // Custom error for invalid type
+    })
+    .min(1, "Quantity is required"),
   roastLevel: z.string().min(1, "Roast level is required"),
   origin: z.string().min(1, "Origin is required"),
   variety: z.string().min(1, "Variety is required"),
@@ -32,16 +36,23 @@ const coffeeBeanSchema = z.object({
     message: "Invalid date format",
   }),
   purchasedFrom: z.string().min(1, "Purchased from is required"),
-  price: z.number().min(0, "Price must be a positive number"),
+  price: z
+    .number({
+      invalid_type_error: "Price must be a number", // Custom error for invalid type
+    })
+    .min(0, "Price must be a positive number"),
 });
 
 export default function CoffeeBeanForm(
   {
     action,
     coffeeBean,
-    userId
-  }: { action: "create" | "edit"; coffeeBean?: CoffeeBean; userId: string } = { action: "create", coffeeBean: undefined, userId: "" }
-  
+    userId,
+  }: { action: "create" | "edit"; coffeeBean?: CoffeeBean; userId: string } = {
+    action: "create",
+    coffeeBean: undefined,
+    userId: "",
+  }
 ) {
   if (action !== "create" && action !== "edit") {
     throw new Error("Invalid action");
@@ -165,11 +176,12 @@ export default function CoffeeBeanForm(
                     type={type}
                     placeholder={placeholder}
                     {...field}
-                    onChange={(e) =>
-                      type === "number"
-                        ? field.onChange(parseFloat(e.target.value))
-                        : field.onChange(e.target.value)
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(
+                        type === "number" ? (value === "" ? "" : value) : value
+                      ); // Allow incomplete decimals
+                    }}
                   />
                 </FormControl>
                 <FormMessage />

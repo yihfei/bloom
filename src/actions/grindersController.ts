@@ -10,12 +10,14 @@ export async function createGrinder(
 ): Promise<void> {
   const name = formData.get("name") as string;
   const price = parseFloat(formData.get("price") as string);
+  const description = formData.get("description") as string;
 
   await prisma.grinder.create({
     data: {
       name,
       price,
       userId,
+      description
     },
   });
   redirect("/grinders");
@@ -44,12 +46,14 @@ export async function updateGrinder(
 ): Promise<void> {
   const name = formData.get("name") as string;
   const price = parseFloat(formData.get("price") as string);
+  const description = formData.get("description") as string;
 
   await prisma.grinder.update({
     where: { id, userId },
     data: {
       name,
       price,
+      description
     },
   });
   redirect("/grinders");

@@ -3,7 +3,7 @@ import { SectionCards } from "@/app/dashboard/section-cards"
 import { getNumberOfBrewsByDay } from "@/actions/brewsController"
 
 
-export default async function Dashboard({ userId }: { userId: string }) {
+export default async function Dashboard({ userId }: { userId: string}) {
   const brewDates = await getNumberOfBrewsByDay(userId);
   return (
     // <SidebarProvider
@@ -20,7 +20,7 @@ export default async function Dashboard({ userId }: { userId: string }) {
         <div className="flex flex-1 flex-col justify-center min-h-screen">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
+              <SectionCards userId={userId} />
               <div className="px-4 lg:px-6">
                 <ChartAreaInteractive brewDates={brewDates} />
               </div>

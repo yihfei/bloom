@@ -30,6 +30,7 @@ model Grinder {
     id    Int    @id @default(autoincrement())
     name  String
     price Float
+    description String?
     brews Brew[]
 
     userId String
@@ -40,6 +41,7 @@ model BrewMethod {
     id     Int    @id @default(autoincrement())
     name   String
     price  Float
+    description String?
     brews  Brew[]
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

@@ -3,7 +3,7 @@ import { readBrew } from "@/actions/brewsController";
 import { readAllCoffeeBeans } from "@/actions/coffeeBeansController";
 import { readAllGrinders } from "@/actions/grindersController";
 import { readAllBrewMethods } from "@/actions/brewMethodsController";
-import { Brew, CoffeeBean, Grinder } from "@prisma/client";
+import { Brew, CoffeeBean, Grinder, BrewMethod } from "@prisma/client";
 import { auth } from "@/auth";
 
 export default async function EditBrewPage({

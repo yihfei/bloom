@@ -16,6 +16,7 @@ type BrewMethodProps = {
   name: string;
   price: number;
   userId: string;
+  description?: string | null;
 };
 
 export default function BrewMethodCard({
@@ -23,6 +24,7 @@ export default function BrewMethodCard({
   name,
   price,
   userId,
+  description,
 }: BrewMethodProps) {
   return (
     <Card className="w-full">
@@ -31,7 +33,7 @@ export default function BrewMethodCard({
         <CardDescription>Price: ${price}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Additional content can go here.</p>
+        <p>{description}</p>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Button>
