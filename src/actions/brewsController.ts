@@ -13,7 +13,7 @@ export async function createBrew(
   const waterAmount = formData.get("waterAmount") as string;
   const grinderId = formData.get("grinderId") as string;
   const grindSetting = formData.get("grindSetting") as string;
-  const brewMethod = formData.get("brewMethod") as string;
+  const brewMethodId = formData.get("brewMethodId") as string;
   const brewTime = formData.get("brewTime") as string;
   const notes = formData.get("notes") as string;
 
@@ -24,7 +24,7 @@ export async function createBrew(
       waterAmount: parseFloat(waterAmount),
       grinderId: parseInt(grinderId),
       grindSetting,
-      brewMethod,
+      brewMethodId: parseInt(brewMethodId),
       brewTime: parseInt(brewTime),
       notes,
       userId,
@@ -46,6 +46,7 @@ export async function readAllBrews(
     include: {
       grinder: true,
       coffeeBean: true,
+      brewMethod: true,
     },
   });
   return brews;
@@ -70,7 +71,7 @@ export async function updateBrew(
   const waterAmount = formData.get("waterAmount") as string;
   const grinderId = formData.get("grinderId") as string;
   const grindSetting = formData.get("grindSetting") as string;
-  const brewMethod = formData.get("brewMethod") as string;
+  const brewMethodId = formData.get("brewMethodId") as string;
   const brewTime = formData.get("brewTime") as string;
   const notes = formData.get("notes") as string;
 
@@ -82,7 +83,7 @@ export async function updateBrew(
       waterAmount: parseFloat(waterAmount),
       grinderId: parseInt(grinderId),
       grindSetting,
-      brewMethod,
+      brewMethodId: parseInt(brewMethodId),
       brewTime: parseInt(brewTime),
       notes,
     },

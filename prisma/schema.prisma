@@ -36,6 +36,15 @@ model Grinder {
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model BrewMethod {
+    id     Int    @id @default(autoincrement())
+    name   String
+    price  Float
+    brews  Brew[]
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model Brew {
     id           Int         @id @default(autoincrement())
     coffeeBean   CoffeeBean? @relation(fields: [coffeeBeanId], references: [id], onDelete: SetNull)
@@ -45,11 +54,12 @@ model Brew {
     grinderId    Int? // Make nullable
     grinder      Grinder?    @relation(fields: [grinderId], references: [id], onDelete: SetNull)
     grindSetting String
-    brewMethod   String
-    brewTime     Int
-    notes        String
-    createdAt    DateTime    @default(now())
-    updatedAt    DateTime    @updatedAt
+    brewMethodId Int?
+    brewMethod   BrewMethod? @relation(fields: [brewMethodId], references: [id], onDelete: SetNull)
+    brewTime  Int
+    notes     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -69,6 +79,7 @@ model User {
     coffeeBeans CoffeeBean[]
     grinders    Grinder[]
     brews       Brew[]
+    BrewMethod  BrewMethod[]
 }
 
 model Account {

@@ -46,6 +46,11 @@ export default function Navbar({ action }: { action: "logout" | "login" }) {
               <Link href="/grinders">grinders</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <Link href="/brew-methods">brew methods</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
           {pathname === "/brews" && (
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
@@ -64,6 +69,13 @@ export default function Navbar({ action }: { action: "logout" | "login" }) {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link href="/coffee-beans/create">add coffee beans</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          )}
+          {pathname === "/brew-methods" && (
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href="/brew-methods/create">add brew method</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           )}

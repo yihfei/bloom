@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createBrew, updateBrew } from "@/actions/brewsController";
-import { Brew, CoffeeBean, Grinder } from "@prisma/client";
+import { Brew, CoffeeBean, Grinder, BrewMethod } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,12 +18,12 @@ import {
 import { Input } from "@/components/ui/input";
 
 const brewSchema = z.object({
-  coffeeBeanId: z.number().int().positive("Coffee bean ID is required"),
+  coffeeBeanId: z.number().int().positive("Coffee bean is required"),
   coffeeAmount: z.number().min(1, "Coffee amount is required"),
   waterAmount: z.number().min(1, "Water amount is required"),
-  grinderId: z.number().int().positive("Grinder ID is required"),
+  grinderId: z.number().int().positive("Grinder is required"),
   grindSetting: z.string().min(1, "Grind setting is required"),
-  brewMethod: z.string().min(1, "Brew method is required"),
+  brewMethodId: z.number().int().positive("BrewMethod is required"),
   brewTime: z.number().int().min(1, "Brew time is required"),
   notes: z.string(),
 });
@@ -33,34 +33,38 @@ export default function BrewForm({
   brew,
   coffeeBeans,
   grinders,
-  userId
+  brewMethods,
+  userId,
 }: {
   action: "create" | "edit";
   brew?: Brew;
   coffeeBeans?: CoffeeBean[];
   grinders?: Grinder[];
+  brewMethods?: BrewMethod[];
   userId: string;
 }) {
   if (action !== "create" && action !== "edit") {
     throw new Error("Invalid action");
   }
+  console.log("brewmethods", brewMethods);
   const form = useForm<z.infer<typeof brewSchema>>({
     resolver: zodResolver(brewSchema),
     defaultValues: brew
       ? {
           ...brew,
-          coffeeBeanId: brew.coffeeBeanId ?? 0,
-          grinderId: brew.grinderId ?? 0,
+          coffeeBeanId: brew.coffeeBeanId ?? coffeeBeans?.[0]?.id ?? 0,
+          grinderId: brew.grinderId ?? grinders?.[0]?.id ?? 0,
+          brewMethodId: brew.brewMethodId ?? brewMethods?.[0]?.id ?? 0,
         }
       : {
-          coffeeBeanId: 0,
-          coffeeAmount: 0,
-          waterAmount: 0,
-          grinderId: 0,
-          grindSetting: "",
-          brewMethod: "",
-          brewTime: 0,
-          notes: "",
+        coffeeBeanId: coffeeBeans?.[0]?.id ?? 0, // Default to first coffeeBeanId or 0
+        grinderId: grinders?.[0]?.id ?? 0, // Default to first grinderId or 0
+        brewMethodId: brewMethods?.[0]?.id ?? 0, // Default to first brewMethodId or 0
+        coffeeAmount: 0,
+        waterAmount: 0,
+        grindSetting: "",
+        brewTime: 0,
+        notes: "",
         },
   });
 
@@ -71,6 +75,7 @@ export default function BrewForm({
     });
 
     if (action === "create") {
+      console.log("Creating brew with data:", data);
       await createBrew(formData, userId);
     } else if (action === "edit" && brew) {
       await updateBrew(brew.id, formData, userId);
@@ -88,9 +93,9 @@ export default function BrewForm({
         {[
           {
             name: "coffeeBeanId",
-            label: "Coffee Bean ID",
+            label: "Coffee Bean",
             type: "number",
-            placeholder: "Enter Coffee Bean ID",
+            placeholder: "Choose Coffee Bean",
           },
           {
             name: "coffeeAmount",
@@ -106,9 +111,9 @@ export default function BrewForm({
           },
           {
             name: "grinderId",
-            label: "Grinder ID",
+            label: "Grinder",
             type: "number",
-            placeholder: "Enter Grinder ID",
+            placeholder: "Choose Grinder",
           },
           {
             name: "grindSetting",
@@ -117,10 +122,10 @@ export default function BrewForm({
             placeholder: "Enter Grind Setting",
           },
           {
-            name: "brewMethod",
+            name: "brewMethodId",
             label: "Brew Method",
             type: "text",
-            placeholder: "Enter Brew Method",
+            placeholder: "Choose Brew",
           },
           {
             name: "brewTime",
@@ -147,7 +152,7 @@ export default function BrewForm({
                     <select
                       {...field}
                       className="w-full border rounded px-3 py-2"
-                      value={field.value === 0 ? "" : field.value}
+                      value={field.value || ""}
                       onChange={(e) => field.onChange(Number(e.target.value))}
                     >
                       <option value="" disabled>
@@ -175,22 +180,38 @@ export default function BrewForm({
                         </option>
                       ))}
                     </select>
+                  ) : name === "brewMethodId" && brewMethods ? (
+                    <select
+                      {...field}
+                      className="w-full border rounded px-3 py-2"
+                      value={field.value === 0 ? "" : field.value}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    >
+                      <option value="" disabled>
+                        Select Brew Method
+                      </option>
+                      {brewMethods.map((brewMethod) => (
+                        <option key={brewMethod.id} value={brewMethod.id}>
+                          {brewMethod.name}
+                        </option>
+                      ))}
+                    </select>
                   ) : (
                     <Input
-                      className="w-full"
-                      type={type}
-                      placeholder={placeholder}
-                      {...field}
-                      onChange={(e) =>
-                        type === "number"
-                          ? field.onChange(
-                              e.target.value === ""
-                                ? undefined
-                                : parseFloat(e.target.value)
-                            )
-                          : field.onChange(e.target.value)
-                      }
-                    />
+                    className="w-full"
+                    type={type}
+                    placeholder={placeholder}
+                    {...field}
+                    onChange={(e) =>
+                      type === "number"
+                        ? field.onChange(
+                            e.target.value === ""
+                              ? ""
+                              : parseFloat(e.target.value) // Handle empty input
+                          )
+                        : field.onChange(e.target.value)
+                    }
+                  />
                   )}
                 </FormControl>
                 <FormMessage />

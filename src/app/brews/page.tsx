@@ -1,11 +1,12 @@
 import { readAllBrews } from "@/actions/brewsController";
 import BrewCard from "@/app/components/brews/BrewCard";
-import { Brew, Grinder, CoffeeBean } from "@prisma/client";
+import { Brew, Grinder, CoffeeBean, BrewMethod } from "@prisma/client";
 import { auth } from "@/auth";
 
 type BrewsWithRelations = Brew & {
   coffeeBean: CoffeeBean | null;
   grinder: Grinder | null;
+  brewMethod: BrewMethod | null;
 };
 
 export default async function BrewsPage() {
@@ -26,7 +27,7 @@ export default async function BrewsPage() {
           coffeeAmount={brew.coffeeAmount}
           waterAmount={brew.waterAmount}
           grinderName={brew.grinder?.name || "none"}
-          brewMethod={brew.brewMethod}
+          brewMethod={brew.brewMethod?.name || "none"}
           grindSetting={brew.grindSetting}
           brewTime={brew.brewTime}
           notes={brew.notes}
