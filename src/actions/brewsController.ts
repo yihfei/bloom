@@ -165,16 +165,31 @@ export async function getAverageBrewPrice(userId: string): Promise<number> {
   const totalPrice = coffeeBeanCost + grinderCost;
 
 
-  console.log("Total Brew Price:", totalPrice);
+  if (totalPrice == 0) {
+    return 0;
+  }
   return parseFloat((totalPrice / brews.length).toFixed(2));// Round to two decimal places
 }
 
 export async function getTotalTimeSpentBrewing(
   userId: string
-): Promise<number> {
+): Promise<string> {
   const brews = await readAllBrews(userId);
   const totalTime = brews.reduce((sum, brew) => sum + (brew.brewTime || 0), 0);
-  return totalTime;
+  
+  // convert seconds to hours, minutes, and seconds
+  const hours = Math.floor(totalTime / 3600);
+  const minutes = Math.floor((totalTime % 3600) / 60);
+  const seconds = totalTime % 60;
+  if (hours === 0 && minutes === 0) {
+    return `${seconds}s`;
+  } else if (hours === 0) {
+    return `${minutes}m ${seconds}s`;
+  } else {
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }
+
+
 }
 
 export async function getAllBrewDates(

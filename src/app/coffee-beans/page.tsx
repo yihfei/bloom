@@ -13,7 +13,7 @@ export default async function CoffeeBeansPage() {
   const coffeeBeans: CoffeeBean[] = await readAllCoffeeBeans(userId);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
       {coffeeBeans.map((coffeeBean) => (
         <CoffeeBeanCard
           key={coffeeBean.id}

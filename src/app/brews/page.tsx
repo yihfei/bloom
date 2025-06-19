@@ -18,7 +18,7 @@ export default async function BrewsPage() {
   const brews: BrewsWithRelations[] = await readAllBrews(userId);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
       {brews.map((brew) => (
         <BrewCard
           key={brew.id}
