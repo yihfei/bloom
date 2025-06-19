@@ -7,6 +7,7 @@ async function cleanUpDatabase() {
   await prisma.brew.deleteMany({});
   await prisma.coffeeBean.deleteMany({});
   await prisma.grinder.deleteMany({});
+  await prisma.brewMethod.deleteMany({});
   console.log("Deleted rows from brew, coffeeBean, and grinder tables.");
 }
 
