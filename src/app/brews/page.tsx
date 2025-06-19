@@ -16,10 +16,12 @@ export default async function BrewsPage() {
     return <div>you&apos;re not signed in</div>;
   }
   const brews: BrewsWithRelations[] = await readAllBrews(userId);
+  brews.reverse(); // Reverse the order to show the most recent brews first
+  
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-      {brews.map((brew) => (
+      {brews.map((brew, index) => (
         <BrewCard
           key={brew.id}
           id={brew.id}
@@ -33,6 +35,7 @@ export default async function BrewsPage() {
           notes={brew.notes}
           createdAt={new Date(brew.createdAt)}
           userId={userId}
+          brewNumber={brews.length - index}
         />
       ))}
     </div>

@@ -117,7 +117,7 @@ export function ChartAreaInteractive({
       <CardHeader>
         <CardTitle>weekly brews</CardTitle>
         <CardDescription>
-          <span>Aggregated brews for the past 3 months</span>
+          <span>aggregated brews for the past 3 months</span>
         </CardDescription>
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">

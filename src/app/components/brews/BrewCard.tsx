@@ -24,6 +24,7 @@ type BrewCardProps = {
   createdAt: Date;
   updatedAt?: Date;
   userId: string;
+  brewNumber: number;
 };
 
 export default function BrewCard({
@@ -38,11 +39,12 @@ export default function BrewCard({
   notes,
   createdAt,
   userId,
+  brewNumber,
 }: BrewCardProps) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Brew #{id}</CardTitle>
+        <CardTitle>Brew #{brewNumber}</CardTitle>
         <CardDescription>
           Created at: {createdAt.toDateString()}
         </CardDescription>
