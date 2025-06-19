@@ -112,6 +112,7 @@ export async function getAverageBrewPrice(userId: string): Promise<number> {
   // Map to track the number of brews for each coffee bean and grinder
   const coffeeBeanUsage: Record<string, number> = {};
   const grinderUsage: Record<string, number> = {};
+  const brewMethodUsage: Record<string, number> = {};
 
   brews.forEach((brew) => {
     if (brew.coffeeBean?.id) {
@@ -121,10 +122,13 @@ export async function getAverageBrewPrice(userId: string): Promise<number> {
     if (brew.grinder?.id) {
       grinderUsage[brew.grinder.id] = (grinderUsage[brew.grinder.id] || 0) + 1;
     }
+    if (brew.brewMethod?.id) {
+      brewMethodUsage[brew.brewMethod.id] =
+        (brewMethodUsage[brew.brewMethod.id] || 0) + 1;
+    }
   });
 
-  console.log("Coffee Bean Usage:", coffeeBeanUsage);
-  console.log("Grinder Usage:", grinderUsage);
+ 
 
   // Calculate the total cost for coffee beans
   const coffeeBeanCost = Object.entries(coffeeBeanUsage).reduce(
@@ -151,9 +155,7 @@ export async function getAverageBrewPrice(userId: string): Promise<number> {
       )?.grinder;
       if (grinder) {
         const avgCost = grinder.price / usage; // Divide cost by usage
-        console.log(
-          `Grinder ID: ${grinderId}, Usage: ${usage}, Avg Cost: ${avgCost}`
-        );
+        
         total += avgCost; // Divide cost by usage
       }
       return total;
@@ -161,10 +163,28 @@ export async function getAverageBrewPrice(userId: string): Promise<number> {
     0
   );
 
+  // Calculate the total cost for brew methods
+  const brewMethodCost = Object.entries(brewMethodUsage).reduce(
+    (total, [brewMethodId, usage]) => {
+      const brewMethod = brews.find(
+        (brew) => brew.brewMethod?.id === parseInt(brewMethodId)
+      )?.brewMethod;
+      if (brewMethod) {
+        const avgCost = brewMethod.price / usage; // Divide cost by usage
+        
+        total += avgCost; // Divide cost by usage
+      }
+      return total;
+    },
+    0
+  );
+
+  console.log('Coffee Bean Cost:', coffeeBeanCost);
+  console.log('Grinder Cost:', grinderCost);
+  console.log('Brew Method Cost:', brewMethodCost);
+
   // Sum up the costs
-  const totalPrice = coffeeBeanCost + grinderCost;
-
-
+  const totalPrice = coffeeBeanCost + grinderCost + brewMethodCost;
   if (totalPrice == 0) {
     return 0;
   }
