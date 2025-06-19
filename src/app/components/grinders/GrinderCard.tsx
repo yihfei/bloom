@@ -30,20 +30,20 @@ export default function GrinderCard({
     <Card className="w-full">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>Price: ${price}</CardDescription>
+        <CardDescription>price: ${price}</CardDescription>
       </CardHeader>
       <CardContent>
         <p>{description}</p>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Button>
-          <Link href={`/grinders/edit/${id}`}>Edit</Link>
+          <Link href={`/grinders/edit/${id}`}>edit</Link>
         </Button>
         <form action={deleteGrinder}>
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="userId" value={userId} />
           <Button type="submit" variant="destructive">
-            Delete
+            delete
           </Button>
         </form>
       </CardFooter>

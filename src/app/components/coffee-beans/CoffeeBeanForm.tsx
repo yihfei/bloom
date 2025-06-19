@@ -21,26 +21,26 @@ import {
 import { Input } from "@/components/ui/input";
 
 const coffeeBeanSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "name is required"),
   quantity: z
     .number({
       invalid_type_error: "quantity must be a number", // Custom error for invalid type
     })
-    .min(1, "Quantity is required"),
-  roastLevel: z.string().min(1, "Roast level is required"),
-  origin: z.string().min(1, "Origin is required"),
-  variety: z.string().min(1, "Variety is required"),
-  processingMethod: z.string().min(1, "Processing method is required"),
-  flavourNotes: z.string().min(1, "Flavour notes are required"),
+    .min(1, "quantity is required"),
+  roastLevel: z.string().min(1, "roast level is required"),
+  origin: z.string().min(1, "origin is required"),
+  variety: z.string().min(1, "variety is required"),
+  processingMethod: z.string().min(1, "processing method is required"),
+  flavourNotes: z.string().min(1, "flavour notes are required"),
   roastDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "Invalid date format",
   }),
-  purchasedFrom: z.string().min(1, "Purchased from is required"),
+  purchasedFrom: z.string().min(1, "purchased from is required"),
   price: z
     .number({
-      invalid_type_error: "Price must be a number", // Custom error for invalid type
+      invalid_type_error: "price must be a number", // Custom error for invalid type
     })
-    .min(0, "Price must be a positive number"),
+    .min(0, "price must be a positive number"),
 });
 
 export default function CoffeeBeanForm(
@@ -104,63 +104,63 @@ export default function CoffeeBeanForm(
         {[
           {
             name: "name",
-            label: "Name",
+            label: "name",
             type: "text",
-            placeholder: "Coffee Bean Name",
+            placeholder: "coffee bean name",
           },
           {
             name: "quantity",
-            label: "Quantity",
+            label: "quantity",
             type: "number",
-            placeholder: "Quantity in grams",
+            placeholder: "quantity in grams",
           },
           {
             name: "roastLevel",
-            label: "Roast Level",
+            label: "roast level",
             type: "text",
-            placeholder: "Roast Level",
+            placeholder: "roast level",
           },
           {
             name: "origin",
-            label: "Origin",
+            label: "origin",
             type: "text",
-            placeholder: "Origin",
+            placeholder: "origin",
           },
           {
             name: "variety",
-            label: "Variety",
+            label: "variety",
             type: "text",
-            placeholder: "Variety",
+            placeholder: "variety",
           },
           {
             name: "processingMethod",
-            label: "Processing Method",
+            label: "processing method",
             type: "text",
-            placeholder: "Processing Method",
+            placeholder: "processing method",
           },
           {
             name: "flavourNotes",
-            label: "Flavour Notes",
+            label: "flavour notes",
             type: "text",
-            placeholder: "Flavour Notes (comma separated)",
+            placeholder: "flavour notes (comma separated)",
           },
           {
             name: "roastDate",
-            label: "Roast Date",
+            label: "roast date",
             type: "date",
             placeholder: "",
           },
           {
             name: "purchasedFrom",
-            label: "Purchased From",
+            label: "purchased from",
             type: "text",
-            placeholder: "Purchased From",
+            placeholder: "purchased from",
           },
           {
             name: "price",
-            label: "Price",
+            label: "price",
             type: "number",
-            placeholder: "Price",
+            placeholder: "price",
           },
         ].map(({ name, label, type, placeholder }) => (
           <FormField
@@ -190,7 +190,7 @@ export default function CoffeeBeanForm(
           />
         ))}
         <Button type="submit">
-          {action === "edit" ? "Update Coffee Bean" : "Create Coffee Bean"}
+          {action === "edit" ? "update coffee bean" : "create coffee bean"}
         </Button>
       </form>
     </Form>

@@ -46,35 +46,35 @@ export default function CoffeeBeanCard({
     <Card className="w-full">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>{origin}</CardDescription>
+        <CardDescription>{purchasedFrom}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Quantity: {quantity}g</p>
-        <p>Roast Level: {roastLevel}</p>
-        <p>Origin: {origin}</p>
-        <p>Variety: {variety}</p>
-        <p>Processing Method: {processingMethod}</p>
+        <p>quantity: {quantity}g</p>
+        <p>roast level: {roastLevel}</p>
+        <p>origin: {origin}</p>
+        <p>variety: {variety}</p>
+        <p>processing method: {processingMethod}</p>
         <div className="flex flex-wrap gap-2">
-          Flavour Notes:
+          flavour notes:
           {flavourNotes.map((note, idx) => (
             <Badge key={idx} variant="outline">
               {note}
             </Badge>
           ))}
         </div>
-        <p>Roast Date: {roastDate.toDateString()}</p>
-        <p>Purchased From: {purchasedFrom}</p>
-        <p>Price: ${price.toFixed(2)}</p>
+        <p>roast date: {roastDate.toDateString()}</p>
+        {/* <p>Purchased From: {purchasedFrom}</p> */}
+        <p>price: ${price.toFixed(2)}</p>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Button>
-          <Link href={`/coffee-beans/edit/${id}`}>Edit</Link>
+          <Link href={`/coffee-beans/edit/${id}`}>edit</Link>
         </Button>
         <form action={deleteCoffeeBean}>
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="userId" value={userId} />
           <Button type="submit" variant="destructive">
-            Delete
+            delete
           </Button>
         </form>
       </CardFooter>

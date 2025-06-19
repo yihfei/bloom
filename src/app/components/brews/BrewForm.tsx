@@ -18,13 +18,13 @@ import {
 import { Input } from "@/components/ui/input";
 
 const brewSchema = z.object({
-  coffeeBeanId: z.number().int().positive("Coffee bean is required"),
-  coffeeAmount: z.number().min(1, "Coffee amount is required"),
-  waterAmount: z.number().min(1, "Water amount is required"),
-  grinderId: z.number().int().positive("Grinder is required"),
-  grindSetting: z.string().min(1, "Grind setting is required"),
-  brewMethodId: z.number().int().positive("BrewMethod is required"),
-  brewTime: z.number().int().min(1, "Brew time is required"),
+  coffeeBeanId: z.number().int().positive("coffee bean is required"),
+  coffeeAmount: z.number().min(1, "coffee amount is required"),
+  waterAmount: z.number().min(1, "water amount is required"),
+  grinderId: z.number().int().positive("grinder is required"),
+  grindSetting: z.string().min(1, "grind setting is required"),
+  brewMethodId: z.number().int().positive("brewMethod is required"),
+  brewTime: z.number().int().min(1, "brew time is required"),
   notes: z.string(),
 });
 
@@ -75,7 +75,6 @@ export default function BrewForm({
     });
 
     if (action === "create") {
-      console.log("Creating brew with data:", data);
       await createBrew(formData, userId);
     } else if (action === "edit" && brew) {
       await updateBrew(brew.id, formData, userId);
@@ -93,51 +92,51 @@ export default function BrewForm({
         {[
           {
             name: "coffeeBeanId",
-            label: "Coffee Bean",
+            label: "coffee bean",
             type: "number",
-            placeholder: "Choose Coffee Bean",
+            placeholder: "choose coffee bean",
           },
           {
             name: "coffeeAmount",
-            label: "Coffee Amount (g)",
+            label: "coffee amount (g)",
             type: "number",
-            placeholder: "Enter Coffee Amount",
+            placeholder: "enter coffee amount",
           },
           {
             name: "waterAmount",
-            label: "Water Amount (ml)",
+            label: "water amount (g)",
             type: "number",
-            placeholder: "Enter Water Amount",
+            placeholder: "enter water amount",
           },
           {
             name: "grinderId",
-            label: "Grinder",
+            label: "grinder",
             type: "number",
-            placeholder: "Choose Grinder",
+            placeholder: "choose grinder",
           },
           {
             name: "grindSetting",
-            label: "Grind Setting",
+            label: "grind setting",
             type: "text",
-            placeholder: "Enter Grind Setting",
+            placeholder: "enter grind setting",
           },
           {
             name: "brewMethodId",
-            label: "Brew Method",
+            label: "brew method",
             type: "text",
-            placeholder: "Choose Brew",
+            placeholder: "choose brew",
           },
           {
             name: "brewTime",
-            label: "Brew Time (seconds)",
+            label: "brew time (seconds)",
             type: "number",
-            placeholder: "Enter Brew Time",
+            placeholder: "enter brew time",
           },
           {
             name: "notes",
-            label: "Notes",
+            label: "notes",
             type: "text",
-            placeholder: "Enter any notes",
+            placeholder: "enter any notes",
           },
         ].map(({ name, label, type, placeholder }) => (
           <FormField
@@ -156,7 +155,7 @@ export default function BrewForm({
                       onChange={(e) => field.onChange(Number(e.target.value))}
                     >
                       <option value="" disabled>
-                        Select Coffee Bean
+                        select coffee bean
                       </option>
                       {coffeeBeans.map((bean) => (
                         <option key={bean.id} value={bean.id}>
@@ -172,7 +171,7 @@ export default function BrewForm({
                       onChange={(e) => field.onChange(Number(e.target.value))}
                     >
                       <option value="" disabled>
-                        Select Grinder
+                        select grinder
                       </option>
                       {grinders.map((grinder) => (
                         <option key={grinder.id} value={grinder.id}>
@@ -188,7 +187,7 @@ export default function BrewForm({
                       onChange={(e) => field.onChange(Number(e.target.value))}
                     >
                       <option value="" disabled>
-                        Select Brew Method
+                        select brew method
                       </option>
                       {brewMethods.map((brewMethod) => (
                         <option key={brewMethod.id} value={brewMethod.id}>

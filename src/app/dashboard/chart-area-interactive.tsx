@@ -115,9 +115,9 @@ export function ChartAreaInteractive({
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Weekly Brews</CardTitle>
+        <CardTitle>weekly brews</CardTitle>
         <CardDescription>
-          <span>Aggregated weekly brews for the last 3 months</span>
+          <span>Aggregated brews for the past 3 months</span>
         </CardDescription>
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
@@ -147,7 +147,7 @@ export function ChartAreaInteractive({
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
-              interval={0}
+              interval={1}
               tickFormatter={(value) => {
                 const date = new Date(value);
                 return date.toLocaleDateString("en-US", {
@@ -160,6 +160,7 @@ export function ChartAreaInteractive({
               domain={[0, Math.max(...weeklyData.map((d) => d.brewCount)) + 1]} // Set max domain dynamically
               tickLine={false}
               axisLine={false}
+              
             />
             <ChartTooltip
               cursor={false}

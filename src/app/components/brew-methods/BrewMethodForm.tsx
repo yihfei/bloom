@@ -21,12 +21,12 @@ import {
 import { Input } from "@/components/ui/input";
 
 const brewMethodSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "name is required"),
   price: z
     .number({
-      invalid_type_error: "Price must be a number", // Custom error for invalid type
+      invalid_type_error: "price must be a number", // Custom error for invalid type
     })
-    .min(0, "Price must be a positive number"),
+    .min(0, "price must be a positive number"),
   description: z.string().optional(),
 });
 
@@ -79,19 +79,19 @@ export default function BrewMethodForm({
             name: "name",
             label: "Name",
             type: "text",
-            placeholder: "Enter brew method name",
+            placeholder: "enter brew method name",
           },
           {
             name: "price",
             label: "Price",
             type: "number",
-            placeholder: "Enter brew method price",
+            placeholder: "enter brew method price",
           },
           {
             name: "description",
             label: "Description",
             type: "text",
-            placeholder: "Enter brew method description (optional)",
+            placeholder: "enter brew method description (optional)",
           },
         ].map(({ name, label, type, placeholder }) => (
           <FormField

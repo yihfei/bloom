@@ -1,15 +1,18 @@
-
 import {
   Card,
   CardAction,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { getNumberOfBrews, getAverageBrewPrice, getTotalTimeSpentBrewing } from "@/actions/brewsController"
-import { getCoffeeBeanCount } from "@/actions/coffeeBeansController"
+} from "@/components/ui/card";
+import {
+  getNumberOfBrews,
+  getAverageBrewPrice,
+  getTotalTimeSpentBrewing,
+} from "@/actions/brewsController";
+import { getCoffeeBeanCount } from "@/actions/coffeeBeansController";
 
-export async function SectionCards({userId}: { userId: string }) {
+export async function SectionCards({ userId }: { userId: string }) {
   const totalBrews = await getNumberOfBrews(userId);
   const avgBrewPrice = await getAverageBrewPrice(userId);
   const totalTimeBrewing = await getTotalTimeSpentBrewing(userId);
@@ -18,7 +21,7 @@ export async function SectionCards({userId}: { userId: string }) {
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Total Brews</CardDescription>
+          <CardDescription>total brews</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {totalBrews}
           </CardTitle>
@@ -40,7 +43,7 @@ export async function SectionCards({userId}: { userId: string }) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Average cost per brew</CardDescription>
+          <CardDescription>average cost per brew</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             ${avgBrewPrice}
           </CardTitle>
@@ -62,7 +65,7 @@ export async function SectionCards({userId}: { userId: string }) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Time spent brewing</CardDescription>
+          <CardDescription>time spent brewing</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {totalTimeBrewing}
           </CardTitle>
@@ -82,7 +85,7 @@ export async function SectionCards({userId}: { userId: string }) {
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Coffee Beans Owned</CardDescription>
+          <CardDescription>coffee beans owned</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {totalCoffeeBeans}
           </CardTitle>
@@ -100,7 +103,6 @@ export async function SectionCards({userId}: { userId: string }) {
           <div className="text-muted-foreground">Meets growth projections</div>
         </CardFooter> */}
       </Card>
-      
     </div>
-  )
+  );
 }

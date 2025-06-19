@@ -17,7 +17,7 @@ export default async function Dashboard({ userId }: { userId: string}) {
       // <AppSidebar variant="inset" />
       // <SidebarInset>
         // <SiteHeader />
-        <div className="flex flex-1 flex-col justify-center min-h-screen">
+        <div className="flex flex-1 flex-col justify-center ">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <SectionCards userId={userId} />

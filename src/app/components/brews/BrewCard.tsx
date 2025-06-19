@@ -48,24 +48,24 @@ export default function BrewCard({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Coffee Bean: {coffeeBeanName}</p>
-        <p>Coffee Amount: {coffeeAmount}g</p>
-        <p>Water Amount: {waterAmount}ml</p>
-        <p>Grinder ID: {grinderName}</p>
-        <p>Grind Setting: {grindSetting}</p>
-        <p>Brew Method: {brewMethod}</p>
-        <p>Brew Time: {brewTime} seconds</p>
-        <p>Notes: {notes}</p>
+        <p>coffee bean: {coffeeBeanName}</p>
+        <p>coffee amount: {coffeeAmount}g</p>
+        <p>water amount: {waterAmount}ml</p>
+        <p>grinder: {grinderName}</p>
+        <p>grind setting: {grindSetting}</p>
+        <p>brew method: {brewMethod}</p>
+        <p>brew time: {brewTime} seconds</p>
+        <p>notes: {notes}</p>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
         <Button>
-          <Link href={`/brews/edit/${id}`}>Edit</Link>
+          <Link href={`/brews/edit/${id}`}>edit</Link>
         </Button>
         <form action={deleteBrew}>
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="userId" value={userId} />
           <Button type="submit" variant="destructive">
-            Delete
+            delete
           </Button>
         </form>
       </CardFooter>    </Card>

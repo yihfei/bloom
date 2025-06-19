@@ -86,7 +86,7 @@ export default function Navbar({ action }: { action: "logout" | "login" }) {
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
-              <Link href="/">Home</Link>
+              <Link href="/">home</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
 
