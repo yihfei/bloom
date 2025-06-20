@@ -1,6 +1,6 @@
 # Bloom
 
-Bloom is a coffee brewing tracker built with [Next.js](https://nextjs.org). It helps coffee enthusiasts document their brewing journey, explore new methods, and refine their craft.
+Bloom is a coffee brewing tracker built with [Next.js](https://nextjs.org). I made it to help coffee enthusiasts (like myself) document their brewing journey, explore new methods, and refine their craft.
 
 ---
 
@@ -66,7 +66,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 1. Push your code to GitHub.
 2. Connect your repository to Vercel.
-3. Connect the vercel project to a database (I used neon).
+3. Connect the vercel project to a Postgres database (I used neon).
 3. Set up environment variables in Vercel.
 4. Deploy your app with one click.
 
